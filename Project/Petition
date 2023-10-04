@@ -1,0 +1,3 @@
+public class petition(){
+    System.out.println("Hello :)")
+}

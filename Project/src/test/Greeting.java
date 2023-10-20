@@ -1,4 +1,4 @@
-package src.Testing;
+package src.test;
 
 public class Greeting {
   private String message;

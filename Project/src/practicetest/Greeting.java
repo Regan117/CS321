@@ -1,4 +1,4 @@
-package src.test;
+package src.practicetest;
 
 public class Greeting {
   private String message;

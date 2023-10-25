@@ -1,5 +1,4 @@
+org/openjfx/WorkFlow.class
 org/openjfx/App.class
-src/petition.class
+org/openjfx/petition.class
 org/openjfx/SystemInfo.class
-module-info.class
-src/WorkFlow.class

@@ -1,5 +1,8 @@
 org/openjfx/WorkFlow.class
 org/openjfx/App.class
+<<<<<<< HEAD
 org/openjfx/Approval.class
+=======
+>>>>>>> refs/remotes/origin/Regan-main
 org/openjfx/petition.class
 org/openjfx/SystemInfo.class

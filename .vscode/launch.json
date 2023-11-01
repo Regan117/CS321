@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Petition",
+            "request": "launch",
+            "mainClass": "org.openjfx.Petition",
+            "projectName": "sample"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,18 +47,32 @@ Scene main, DataEntry, Reviewer, Approver;
         Button button2= new Button("Go back to selection");
         button2.setOnAction(e -> stageMainStage.setScene(main));
         VBox layout2= new VBox(20);
-        layout2.getChildren().addAll(label2,getNextbutton, button2);
+        //layout2.getChildren().addAll(label2,getNextbutton, button2);
+        Label label4 = new Label("Full Name: ");
+        TextField textfield2 = new TextField();
+        HBox hb1 = new HBox(textfield2);
+        hb1.setSpacing(10);
+        layout2.getChildren().addAll(label2, getNextbutton,button2,label4, hb1);
         Reviewer= new Scene(layout2,300,250);
+        
 
         //Approver
-        Approver ap = new Approver();
+        Petition.main(null);
+        Approver ap = new Approver(1);
         Label label3= new Label("Welcome to Approver");
-        Label label4= new Label("Petition");
-        Button getNextbutton2 = new Button("Name:"+ ( ap.getName()));
+        Label formLabel= new Label("Petition");
+        Label nameLabel= new Label("Name: "+(ap.getName()));
+        Label DOBLabel= new Label("Date Of Birth: "+( ap.getDOB()));
+        Label emailLabel= new Label("Email Address: " +( ap.getEmail()));
+        Label cooLabel= new Label("cooLabel: "+( ap.getCountry()));
+        Label AnumLabel= new Label("ANumber: " +( ap.getAnum()));
+
+
+        Button getNextbutton2 = new Button("Get Next:"+ ( ap.getName()));
         Button button3 = new Button("Go back to selection");
         button3.setOnAction(e -> stageMainStage.setScene(main));
         VBox layout3 = new VBox(20);
-        layout3.getChildren().addAll(label3,label4, getNextbutton2,button3);
+        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, getNextbutton2,button3);
         Approver= new Scene(layout3,300,250);
         
 

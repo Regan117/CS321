@@ -5,31 +5,42 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class PetitionTest{
-	public String name = "John joe doe";
-	public int DOB = 12311999;
+	public String name = "John";
+	public String DOB = "1999-03-14";
 	public String Email = "john@gmail.com";
 	public String Country = "Brazil";
 	public int ANum = 123456789;
 	public Petition mockDB[] = new Petition[5];
 
 	public final Petition p = new Petition( name,DOB, Email, Country, ANum);
-	public final Petition p1 = new Petition( "james bo cane",12341989, Email, Country, 999999999);
+	public final Petition p1 = new Petition( "james bo cane",DOB, Email, Country, 999999999);
 
 	@Test
 	public void testValidateEntry()throws Exception {
 		//Petition p = new Petition( name,DOB, Email, Country, ANum);
 		/*assertTrue(name instanceof String);
 		assertTrue(p.ValidateEntry(name,DOB,Email,Country,ANum)); */
-		assertEquals(true, p.validateEntry(name,DOB,Email,Country,ANum));
-		assertEquals(false, p.validateEntry(name,934372849,Email,Country,ANum));
-		assertEquals(false, p.validateEntry("123",DOB,Email,Country,ANum));
-		assertEquals(false, p.validateEntry(name,DOB,"john",Country,ANum));
-		assertEquals(false, p.validateEntry(name,934372849,Email,"UnitedStates",ANum));
-		assertEquals(false, p.validateEntry(name,DOB,Email,Country,-2));
-		assertEquals(false, p.validateEntry(null,DOB,Email,Country,ANum));
-		assertEquals(false, p.validateEntry(name,-2,Email,Country,ANum));
-		assertEquals(false, p.validateEntry(name,DOB,null,Country,ANum));
-		assertEquals(false, p.validateEntry(name,DOB,Email,null,ANum));
+		Petition p2 = new Petition(name,DOB,Email,Country,ANum);
+		Petition p3 = new Petition(name,"934372849",Email,Country,ANum);
+			Petition p4 = new Petition("123",DOB,Email,Country,ANum);
+				Petition p5 = new Petition(name,DOB,"john",Country,ANum);
+					Petition p6 = new Petition(name,"934372849",Email,"UnitedStates",ANum);
+						Petition p7 = new Petition(name,DOB,Email,Country,-2);
+							Petition p8 = new Petition(null,DOB,Email,Country,ANum);
+								Petition p9 = new Petition(name,"-2",Email,Country,ANum);
+									Petition p10 = new Petition(name,DOB,null,Country,ANum);
+										Petition p11 = new Petition(name,DOB,Email,null,ANum);
+
+		assertEquals(true, p2.validateEntry());
+		assertEquals(false, p3.validateEntry());
+		assertEquals(false, p4.validateEntry());
+		assertEquals(false, p5.validateEntry());
+		assertEquals(false, p6.validateEntry());
+		assertEquals(false, p7.validateEntry());
+		assertEquals(false, p8.validateEntry());
+		assertEquals(false, p9.validateEntry());
+		assertEquals(false, p10.validateEntry());
+		assertEquals(false, p11.validateEntry());
 	}
 
 	@Test

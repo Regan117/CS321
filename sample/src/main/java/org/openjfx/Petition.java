@@ -13,13 +13,13 @@ class Petition extends DataBase{
         //mock data to be added into the "dataBaseMap" should function on it's own when WF is working
         Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1);
         //System.out.println("test 1 should pass" +one.validateEntry());
-        one.writeToDB(one);
-
-
-        Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2);
-        one.writeToDB(two);
+        one.writeToDB(one,1);
 
         
+        Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2);
+        two.writeToDB(two,2);
+
+        /* 
         Petition three = new Petition("james", "2000-08-03", "regan@gmail.com","USA",3);
         one.writeToDB(three);
         
@@ -32,7 +32,7 @@ class Petition extends DataBase{
             System.out.println("why");
 
         }
-
+        */
         //TESTS for the petetion functions
         /* 
         Petition two = new Petition("ja3mes", "2000-08-03", "regan@gmail.com","USA",2);
@@ -118,7 +118,7 @@ class Petition extends DataBase{
         return GenericValidator.isEmail(Email);
     }
     public Boolean searchDB(Petition j){
-        for(Petition i : dataBaseMap.values()) {
+        for(Petition i : DataBase.dataBaseMap.values()) {
 
             if(i.Name.equals(j.Name) && i.Anum == j.Anum){
 

@@ -58,7 +58,7 @@ Scene main, DataEntry, Reviewer, Approver;
 
         //Approver
         Petition.main(null);
-        Approver ap = new Approver(1);
+        Approver ap = new Approver(2);
         Label label3= new Label("Welcome to Approver");
         Label formLabel= new Label("Petition");
         Label nameLabel= new Label("Name: "+(ap.getName()));

@@ -109,10 +109,10 @@ class Petition extends DataBase{
                 return false;
             }
         }
-        if(!GenericValidator.isDate(DOB, "yyyy-MM-dd", dV)){
+        if(!GenericValidator.isDate(DOB, "MM-DD-YYYY", dV)){
             return false;
         }
-        if(Country.equals("UnitedStates")){
+        if(Country.equals("Null")){
             return false;
         }
         return GenericValidator.isEmail(Email);
@@ -120,8 +120,7 @@ class Petition extends DataBase{
     public Boolean searchDB(Petition j){
         for(Petition i : DataBase.dataBaseMap.values()) {
 
-            if(i.Name.equals(j.Name) && i.Anum == j.Anum){
-
+            if(i.Name.equals(j.Name) && i.DOB.equals(j.DOB) && i.Country.equals(j.Country)){
                 return true;
             }
         }
@@ -136,5 +135,13 @@ class Petition extends DataBase{
         Petition p = new Petition(this.getName(),this.getDOB(),this.getEmail(),this.getCountry(),this.getAnum());
         DataBase.writeToDB(p, Anum);
         return true;
+    }
+    void displayPetition(){
+        System.out.println(this.Name);
+        System.out.println(this.Country);
+        System.out.println(this.Email);
+        System.out.println(this.DOB);
+        System.out.println(this.Anum);
+
     }
 }

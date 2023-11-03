@@ -3,6 +3,8 @@ package org.openjfx;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -32,14 +34,82 @@ Scene main, DataEntry, Reviewer, Approver;
         var main = new Scene(layout, 640, 480);
 
         //Data Entry
-        Label label1= new Label("Welcome to Data Entry");
-        TextField textFieldNamField = new TextField("Enter your name here");
-        Button enterButton = new Button("Enter");
+        Petition petition = new Petition();
+    //do{
+        Label label1 = new Label("Welcome to Data Entry");
+        Label wrong = new Label("Incorrect Input Values");
+        wrong.setStyle("-fx-text-fill: red");
+        wrong.setVisible(false);
+        //ANumber
+        Label anumlabel = new Label("Enter Alien Number Below:");
+        final TextField aNumData = new TextField();
+        aNumData.setPromptText("Enter Alien Number: '123456789'.");
+        //Name Fields
+        Label namelabel = new Label("Enter Name Below:");
+        final TextField firstNameData = new TextField();
+        firstNameData.setPromptText("Enter First Name: 'John'.");
+        final TextField middleNameData = new TextField();
+        middleNameData.setPromptText("Enter Middle Name.");
+        //Add Opt out box for middle name
+        CheckBox removeMiddle = new CheckBox("No Middle Name");
+        removeMiddle.setOnAction(e -> {
+            if(removeMiddle.isSelected()){
+                middleNameData.setDisable(true);
+            } else {
+                middleNameData.setDisable(false);
+            }
+        });
+        final TextField lastNameData = new TextField();
+        lastNameData.setPromptText("Enter Last Name: 'Doe'.");
+        //Date Of Birth
+        Label doblabel = new Label("Enter Date of Birth Below:");
+        final TextField dobData = new TextField();
+        dobData.setPromptText("Enter DOB: 'MM-DD-YYYY'.");
+        //Email
+        Label emaillabel = new Label("Enter E-mail Below:");
+        final TextField emailData = new TextField();
+        emailData.setPromptText("Enter E-mail: 'johndoe@aol.com'.");
+        //Country of Origin List
+        Label countrylabel = new Label("Select Country Below:");
+        ChoiceBox<String> countryBox = new ChoiceBox<>();
+        countryBox.getItems().addAll("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
+        countryBox.setValue("Null");
+        //Buttons
+        Button saveDataButton = new Button("Submit");
+        saveDataButton.setOnAction(e -> {
+            int anum = Integer.parseInt(aNumData.getText());
+            petition.setAnum(anum);
+            String fullName = firstNameData.getText() + "" + middleNameData.getText() + "" + lastNameData.getText();
+            petition.setName(fullName);
+            petition.setDOB(dobData.getText());
+            petition.setEmail(emailData.getText());
+            petition.setCountry(countryBox.getValue());
+            petition.displayPetition();
+            if(petition.validateEntry() == false || petition.searchDB(petition) == true){
+                stageMainStage.setScene(DataEntry);
+                wrong.setVisible(true);
+                System.out.println("Petition Exists or Failed to Validate");
+            } else {
+                petition.writeToDB();
+                stageMainStage.setScene(main);
+                wrong.setVisible(false);
+                aNumData.clear();
+                firstNameData.clear();
+                middleNameData.clear();
+                lastNameData.clear();
+                dobData.clear();
+                emailData.clear();
+                countryBox.setValue("Null");
+                System.out.println("Petition Doesn't Exist and Succeeded Validation");
+            }
+        });
         Button button1= new Button("Go back to selection");
         button1.setOnAction(e -> stageMainStage.setScene(main));
         VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1,textFieldNamField, enterButton,button1);
-        DataEntry = new Scene(layout1, 300, 250);
+        layout1.getChildren().addAll(label1, wrong, anumlabel, aNumData, namelabel, firstNameData, middleNameData, removeMiddle, lastNameData, doblabel, dobData, emaillabel, emailData, countrylabel, countryBox, saveDataButton, button1);
+        DataEntry = new Scene(layout1, 300, 800);
+    //}while((petition.validateEntry() == false) && (petition.searchDB(petition) == true));
+    //petition.writeToDB();
 
         //Reviewer
         Label label2= new Label("Welcome to Reviewer");

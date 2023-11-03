@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-Scene main, DataEntry, Reviewer, Approver;
+Scene main, DataEntry, Reviewer, Approver, emailScene;
     @Override
     public void start(Stage stageMainStage) {
         var javaVersion = SystemInfo.javaVersion();
@@ -128,23 +129,36 @@ Scene main, DataEntry, Reviewer, Approver;
 
         //Approver
         Petition.main(null);
-        Approver ap = new Approver(2);
+        Approver ap = new Approver(1);
         Label label3= new Label("Welcome to Approver");
         Label formLabel= new Label("Petition");
         Label nameLabel= new Label("Name: "+(ap.getName()));
         Label DOBLabel= new Label("Date Of Birth: "+( ap.getDOB()));
         Label emailLabel= new Label("Email Address: " +( ap.getEmail()));
-        Label cooLabel= new Label("cooLabel: "+( ap.getCountry()));
+        Label cooLabel= new Label("Country of Orgin : "+( ap.getCountry()));
         Label AnumLabel= new Label("ANumber: " +( ap.getAnum()));
-
-
-        Button getNextbutton2 = new Button("Get Next:"+ ( ap.getName()));
+        Button approvebutton = new Button("Approve");
+        approvebutton.setOnAction(e -> stageMainStage.setScene(emailScene));
+        Button rejectbutton = new Button("Reject");
+        rejectbutton.setOnAction(e -> stageMainStage.setScene(main));
         Button button3 = new Button("Go back to selection");
         button3.setOnAction(e -> stageMainStage.setScene(main));
         VBox layout3 = new VBox(20);
-        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, getNextbutton2,button3);
-        Approver= new Scene(layout3,300,250);
+        FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
+
+        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, button3);
+        Approver= new Scene(layout3, 640,480);
         
+        //Email
+        Label message = new Label("New Message");
+        Label to = new Label("To: "+ (ap.getEmail()));
+        Label subj = new Label("Subject: Petition for Alien Fiancé(e) and Children");
+        Label text = new Label("Hello " + (ap.getName()) + ", \n I'm pleased to inform you that your form has been approved! \n Sincerly, Immigrant Services");
+        Button send = new Button("Send");
+        send.setOnAction(e -> stageMainStage.setScene(main));
+        VBox layout4 = new VBox(20);
+        layout4.getChildren().addAll(message,to,subj,text,send);
+        emailScene= new Scene(layout4, 640,480);
 
         stageMainStage.setScene(main);
         stageMainStage.show();

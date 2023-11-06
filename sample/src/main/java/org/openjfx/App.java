@@ -8,7 +8,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,7 +15,7 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-Scene main, DataEntry, Reviewer, Approver, emailScene;
+Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
     @Override
     public void start(Stage stageMainStage) {
         var javaVersion = SystemInfo.javaVersion();
@@ -86,7 +85,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene;
             petition.setEmail(emailData.getText());
             petition.setCountry(countryBox.getValue());
             petition.displayPetition();
-            if(petition.validateEntry() == false || petition.searchDB(petition) == true){
+            if(petition.validateEntry() == true || petition.searchDB(petition) == true){
                 stageMainStage.setScene(DataEntry);
                 wrong.setVisible(true);
                 System.out.println("Petition Exists or Failed to Validate");
@@ -114,17 +113,54 @@ Scene main, DataEntry, Reviewer, Approver, emailScene;
 
         //Reviewer
         Label label2= new Label("Welcome to Reviewer");
-        Button getNextbutton = new Button("Get next");
+        //Label personName = new Label("Name: Tariq");
+        //Button getNextbutton = new Button("Get next");
+        //Review review = new Review(1);
         Button button2= new Button("Go back to selection");
         button2.setOnAction(e -> stageMainStage.setScene(main));
         VBox layout2= new VBox(20);
+        VBox editLayout= new VBox(20);
+
         //layout2.getChildren().addAll(label2,getNextbutton, button2);
-        Label label4 = new Label("Full Name: ");
-        TextField textfield2 = new TextField();
-        HBox hb1 = new HBox(textfield2);
-        hb1.setSpacing(10);
-        layout2.getChildren().addAll(label2, getNextbutton,button2,label4, hb1);
-        Reviewer= new Scene(layout2,300,250);
+        Label personName = new Label("Full Name: Tariq" );
+        Label personDob = new Label("Date of Birth: 08-22-1965");
+        Label personCountry = new Label ("Country of Birth: UK");
+        Label personAnum = new Label("ANumber: 112233445");
+        Label emaiLabel = new Label("Email: Tariq@gmail.com");
+        Button editButton= new Button("Edit");
+        editButton.setOnAction(e -> stageMainStage.setScene(Edit));
+        layout2.getChildren().addAll(label2,personName,personDob,emaiLabel,personCountry,personAnum, editButton,button2);
+        Reviewer= new Scene(layout2,640,480);
+
+
+
+        Label anuml = new Label("Alien Number Below:");
+        Label anumn = new Label("112233445");
+        //Name Fields
+        Label namel = new Label("Enter Name Below:");
+        final TextField firstName = new TextField("Tariq");
+        firstNameData.setPromptText("Enter First Name: 'John'.");
+        //Date Of Birth
+        Label dobl = new Label("Enter Date of Birth Below:");
+        final TextField dobT = new TextField("08-22-1965");
+        dobT.setPromptText("Enter DOB: 'MM-DD-YYYY'.");
+        //Email
+        Label emailn = new Label("Enter E-mail Below:");
+        final TextField emailT = new TextField("Tariq@gmail.com");
+        emailT.setPromptText("Enter E-mail: 'johndoe@aol.com'.");
+        //Country of Origin List
+        Label countryTLabel = new Label("Select Country Below:");
+        ChoiceBox<String> countryT = new ChoiceBox<>();
+        countryT.getItems().addAll("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
+        countryT.setValue("Null");
+        Button saveEdit = new Button("Save");
+        saveEdit.setOnAction(e -> stageMainStage.setScene(main));
+
+        editLayout.getChildren().addAll(anuml, anumn, namel, firstName, dobl, dobT, emailn,emailT, countryTLabel, countryT, saveEdit);
+
+        Edit= new Scene(editLayout, 640,480);
+
+
         
 
         //Approver

@@ -7,13 +7,15 @@ public class Review extends App {
     protected String Country;
     protected int Anum;
 
-Review(String name, String email, String dob, String country, int anum){
-    this.Name = name;
-    this.Email = email;
-    this.DOB = dob;
-    this.Country = country;
-    this.Anum = anum;
-}
+    public Review(int mocktasknum){
+        Petition p = new Petition();
+        p = p.pullFromDB(mocktasknum);
+        Name = p.getName();
+        DOB = p.getDOB();
+        Email = p.getEmail();
+        Country = p.getCountry();
+        Anum = p.getAnum();
+    }
 
     void Edit(){
 
@@ -27,7 +29,24 @@ Review(String name, String email, String dob, String country, int anum){
         
     }
     void AccessPetition(){
-
-
     }
+
+    public String getName(){
+            return Name;
+    }
+    public String getEmail() {
+            return Email;
+        }
+        public String getDOB() {
+            return DOB;
+        }
+        
+        public String getCountry() {
+            return Country;
+        }
+        
+        public int getAnum() {
+            return Anum;
+        }
+    
 }

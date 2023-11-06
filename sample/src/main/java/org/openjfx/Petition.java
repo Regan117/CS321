@@ -19,7 +19,7 @@ class Petition extends DataBase{
         Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2);
         two.writeToDB(two,2);
 
-        /* 
+        /*
         Petition three = new Petition("james", "2000-08-03", "regan@gmail.com","USA",3);
         one.writeToDB(three);
         

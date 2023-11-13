@@ -41,7 +41,5 @@ class Approver extends App {
         return Anum;
     }
 
-   
-
 }
 

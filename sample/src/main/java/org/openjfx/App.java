@@ -35,7 +35,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
 
         //Data Entry
         Petition petition = new Petition();
-        WorkFlow wf = new WorkFlow();
+        WorkFlow wf = new WorkFlow(); 
     //do{
         Label label1 = new Label("Welcome to Data Entry");
         Label wrong = new Label("Incorrect Input Values");

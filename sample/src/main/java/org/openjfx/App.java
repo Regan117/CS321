@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
+Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
     @Override
     public void start(Stage stageMainStage) {
         var javaVersion = SystemInfo.javaVersion();
@@ -113,7 +113,8 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
         DataEntry = new Scene(layout1, 300, 800);
     //}while((petition.validateEntry() == false) && (petition.searchDB(petition) == true));
     //petition.writeToDB();
-
+    Petition.main(null);
+    Review r = new Review(1);
         //Reviewer
         Label label2= new Label("Welcome to Reviewer");
         //Label personName = new Label("Name: Tariq");
@@ -125,11 +126,11 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
         VBox editLayout= new VBox(20);
 
         //layout2.getChildren().addAll(label2,getNextbutton, button2);
-        Label personName = new Label("Full Name: Tariq" );
-        Label personDob = new Label("Date of Birth: 08-22-1965");
-        Label personCountry = new Label ("Country of Birth: UK");
-        Label personAnum = new Label("ANumber: 112233445");
-        Label emaiLabel = new Label("Email: Tariq@gmail.com");
+        Label personName = new Label("Full Name: "+r.getName() );
+        Label personDob = new Label("Date of Birth: 08-22-1965"+r.getDOB());
+        Label personCountry = new Label ("Country of Birth: "+r.getCountry());
+        Label personAnum = new Label("ANumber: " + r.getAnum());
+        Label emaiLabel = new Label("Email: " + r.getEmail());
         Button editButton= new Button("Edit");
         editButton.setOnAction(e -> stageMainStage.setScene(Edit));
         layout2.getChildren().addAll(label2,personName,personDob,emaiLabel,personCountry,personAnum, editButton,button2);
@@ -138,18 +139,19 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
 
 
         Label anuml = new Label("Alien Number Below:");
-        Label anumn = new Label("112233445");
+        String anumInString = Integer.toString(r.getAnum());
+        final TextField anumVal = new TextField(anumInString);
         //Name Fields
         Label namel = new Label("Enter Name Below:");
-        final TextField firstName = new TextField("Tariq");
-        firstNameData.setPromptText("Enter First Name: 'John'.");
+        final TextField firstName = new TextField(r.getName());
+        firstNameData.setPromptText("Enter First Name: ");
         //Date Of Birth
         Label dobl = new Label("Enter Date of Birth Below:");
-        final TextField dobT = new TextField("08-22-1965");
+        final TextField dobT = new TextField(r.getDOB());
         dobT.setPromptText("Enter DOB: 'MM-DD-YYYY'.");
         //Email
         Label emailn = new Label("Enter E-mail Below:");
-        final TextField emailT = new TextField("Tariq@gmail.com");
+        final TextField emailT = new TextField(r.getEmail());
         emailT.setPromptText("Enter E-mail: 'johndoe@aol.com'.");
         //Country of Origin List
         Label countryTLabel = new Label("Select Country Below:");
@@ -157,13 +159,23 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
         countryT.getItems().addAll("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
         countryT.setValue("Null");
         Button saveEdit = new Button("Save");
-        saveEdit.setOnAction(e -> stageMainStage.setScene(main));
+        saveEdit.setOnAction(e -> {
+            Petition toSave = new Petition();
+            toSave.setName(firstName.getText());
+            toSave.setDOB(dobT.getText());
+            toSave.setEmail(emailT.getText());
+            toSave.setCountry(countryT.getValue());
+            //if(toSave.validateEntry()==false){
+            //    System.err.println("Invalid Input");
+            //}else{
+            toSave.writeToDB();
+            stageMainStage.setScene(main);
+            //}
 
-        editLayout.getChildren().addAll(anuml, anumn, namel, firstName, dobl, dobT, emailn,emailT, countryTLabel, countryT, saveEdit);
-
+        });
+        editLayout.getChildren().addAll(anuml, anumVal, namel, firstName, dobl, dobT, emailn,emailT, countryTLabel, countryT, saveEdit);
+        
         Edit= new Scene(editLayout, 640,480);
-
-
         
 
         //Approver

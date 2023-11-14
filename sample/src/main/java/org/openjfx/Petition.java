@@ -6,17 +6,16 @@ class Petition extends DataBase{
     protected String DOB;
     protected String Country;
     protected int Anum;
+    protected int iD;
     
-
-
     public static void main(String[] args){
         //mock data to be added into the "dataBaseMap" should function on it's own when WF is working
-        Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1);
+        Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1,1);
         //System.out.println("test 1 should pass" +one.validateEntry());
         one.writeToDB(one,1);
 
         
-        Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2);
+        Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2,2);
         two.writeToDB(two,2);
 
         /*
@@ -57,12 +56,13 @@ class Petition extends DataBase{
     public Petition(){
 
     }
-    public Petition(String name, String dOB, String email, String country, int anum) {
+    public Petition(String name, String dOB, String email, String country, int anum, int id) {
         Name = name;
         Email = email;
         DOB = dOB;
         Country = country;
         Anum = anum;
+        iD = id;
     }
     public String getName() {
         return Name;
@@ -93,6 +93,12 @@ class Petition extends DataBase{
     }
     public void setAnum(int anum) {
         Anum = anum;
+    }
+    public int getiD() {
+        return iD;
+    }
+    public void setiD(int iD) {
+        this.iD = iD;
     }
     
 
@@ -132,7 +138,7 @@ class Petition extends DataBase{
         return DataBase.dataBaseMap.get(num);
     }
     public Boolean writeToDB(){
-        Petition p = new Petition(this.getName(),this.getDOB(),this.getEmail(),this.getCountry(),this.getAnum());
+        Petition p = new Petition(this.getName(),this.getDOB(),this.getEmail(),this.getCountry(),this.getAnum(), this.getiD());
         DataBase.writeToDB(p, Anum);
         return true;
     }
@@ -142,6 +148,5 @@ class Petition extends DataBase{
         System.out.println(this.Email);
         System.out.println(this.DOB);
         System.out.println(this.Anum);
-
     }
 }

@@ -35,6 +35,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
 
         //Data Entry
         Petition petition = new Petition();
+        WorkFlow wf = new WorkFlow();
     //do{
         Label label1 = new Label("Welcome to Data Entry");
         Label wrong = new Label("Incorrect Input Values");
@@ -84,13 +85,15 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit;
             petition.setDOB(dobData.getText());
             petition.setEmail(emailData.getText());
             petition.setCountry(countryBox.getValue());
+            petition.setiD(wf.getUniqueID());
             petition.displayPetition();
-            if(petition.validateEntry() == true || petition.searchDB(petition) == true){
+            if(petition.validateEntry() == false || petition.searchDB(petition) == true){
                 stageMainStage.setScene(DataEntry);
                 wrong.setVisible(true);
                 System.out.println("Petition Exists or Failed to Validate");
             } else {
                 petition.writeToDB();
+                wf.StoreFinishedTasks(petition.getiD(), "DataEntry");
                 stageMainStage.setScene(main);
                 wrong.setVisible(false);
                 aNumData.clear();

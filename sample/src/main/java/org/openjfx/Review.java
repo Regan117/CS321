@@ -1,11 +1,17 @@
 package org.openjfx;
 
-public class Review extends App {
+class Review extends App {
     protected String Name ;
     protected String Email;
     protected String DOB;
     protected String Country;
     protected int Anum;
+    //private Petition p = new Petition("james bo cane","1999-08-08", "jame@gmail.com", "Brazil", 999999999);
+    private int mocktasknum = 1;
+
+    public Review(){
+
+    }
 
     public Review(int mocktasknum){
         Petition p = new Petition();
@@ -17,36 +23,24 @@ public class Review extends App {
         Anum = p.getAnum();
     }
 
-    void Edit(){
-
-
-
-    }
-    boolean UpdateWF(){
-        return false;
-    }
-    void WriteToPetition(){
-        
-    }
-    void AccessPetition(){
-    }
-
     public String getName(){
-            return Name;
+        return Name;
     }
     public String getEmail() {
-            return Email;
-        }
-        public String getDOB() {
-            return DOB;
-        }
-        
-        public String getCountry() {
-            return Country;
-        }
-        
-        public int getAnum() {
-            return Anum;
-        }
+        return Email;
+    }
+    public String getDOB() {
+        return DOB;
+    }
     
+    public String getCountry() {
+        return Country;
+    }
+    
+    public int getAnum() {
+        return Anum;
+    }
+
 }
+
+

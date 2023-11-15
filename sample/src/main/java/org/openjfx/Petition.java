@@ -1,5 +1,5 @@
 package org.openjfx;
-import org.apache.commons.validator.GenericValidator;
+
 class Petition extends DataBase{
     protected String Name;
     protected String Email;
@@ -101,7 +101,6 @@ class Petition extends DataBase{
         this.iD = iD;
     }
     
-
 //NOT FINISHED
     public Boolean validateEntry() {
         if(Name == null || DOB == null || Country == null|| Email == null || Anum < 0 || Anum >  1000000000){
@@ -115,13 +114,14 @@ class Petition extends DataBase{
                 return false;
             }
         }
-        if(!GenericValidator.isDate(DOB, "MM-DD-YYYY", dV)){
-            return false;
-        }
-        if(Country.equals("Null")){
-            return false;
-        }
-        return GenericValidator.isEmail(Email);
+        //if(!GenericValidator.isDate(DOB, "MM-DD-YYYY", dV)){
+        //    return false;
+        //}
+        //if(Country.equals("Null")){
+            //return false;
+        //}
+        //return GenericValidator.isEmail(Email);
+        return true;
     }
     public Boolean searchDB(Petition j){
         for(Petition i : DataBase.dataBaseMap.values()) {

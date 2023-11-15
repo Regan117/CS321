@@ -35,7 +35,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
 
         //Data Entry
         Petition petition = new Petition();
-        WorkFlow wf = new WorkFlow(); 
+        WorkFlow wf = new WorkFlow();
     //do{
         Label label1 = new Label("Welcome to Data Entry");
         Label wrong = new Label("Incorrect Input Values");
@@ -93,7 +93,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
                 System.out.println("Petition Exists or Failed to Validate");
             } else {
                 petition.writeToDB();
-                wf.StoreFinishedTasks(petition.getiD(), "DataEntry");
+                wf.StoreFinishedTasks(petition.getiD(), "Review");
                 stageMainStage.setScene(main);
                 wrong.setVisible(false);
                 aNumData.clear();
@@ -114,7 +114,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
     //}while((petition.validateEntry() == false) && (petition.searchDB(petition) == true));
     //petition.writeToDB();
     Petition.main(null);
-    Review r = new Review(1);
+    Review r = new Review();
         //Reviewer
         Label label2= new Label("Welcome to Reviewer");
         //Label personName = new Label("Name: Tariq");
@@ -180,7 +180,7 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
 
         //Approver
         Petition.main(null);
-        Approver ap = new Approver(1);
+        Approver ap = new Approver(wf.getApproverNext());
         Label label3= new Label("Welcome to Approver");
         Label formLabel= new Label("Petition");
         Label nameLabel= new Label("Name: "+(ap.getName()));
@@ -192,12 +192,27 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
         approvebutton.setOnAction(e -> stageMainStage.setScene(emailScene));
         Button rejectbutton = new Button("Reject");
         rejectbutton.setOnAction(e -> stageMainStage.setScene(main));
-        Button button3 = new Button("Go back to selection");
-        button3.setOnAction(e -> stageMainStage.setScene(main));
+        Button selectionButton = new Button("Go back to selection");
+        selectionButton.setOnAction(e -> stageMainStage.setScene(main));
+
+        //next button
+        Button next = new Button("Next");
+        next.setOnAction(e->{
+	        Approver ap2 = new Approver(wf.getApproverNext());
+            nameLabel.setText("Name: "+(ap2.getName()));
+            DOBLabel.setText("Date Of Birth: "+( ap2.getDOB()));
+            emailLabel.setText("Email Address: " +( ap2.getEmail()));
+            cooLabel.setText("Country of Orgin : "+( ap2.getCountry()));
+            AnumLabel.setText("ANumber: " +( ap.getAnum()));
+        });
+
+
         VBox layout3 = new VBox(20);
         FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
+        FlowPane decison2 = new FlowPane(30,30,selectionButton,next);
+        
 
-        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, button3);
+        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, decison2);
         Approver= new Scene(layout3, 640,480);
         
         //Email

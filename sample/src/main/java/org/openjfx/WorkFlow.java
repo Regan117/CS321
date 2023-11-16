@@ -20,6 +20,7 @@ public WorkFlow(){
 }
 public int getUniqueID(){
     uniqueID ++;
+    System.out.println("counter =" + (uniqueID-1));
     return uniqueID -1;
 }
 
@@ -43,7 +44,7 @@ public int StoreFinishedTasks(int tasknum, String from){
             return 0;
         }
     }
-    if(from.equals("approver")){
+    if(from.equals("Approver")){
         DoneList.add(tasknum);
         if(DoneList.contains(tasknum)){
             return 0;
@@ -52,13 +53,17 @@ public int StoreFinishedTasks(int tasknum, String from){
     return -1;
 }
 
+public void sendBack(int id){
+    reviewList.add(id);
+}
+
 public int getApproverNext(){
     if(!approvalList.isEmpty()){
         return approvalList.remove(0);
     }
     else{
 
-        return 1;
+        return -1;
     }
 }
 

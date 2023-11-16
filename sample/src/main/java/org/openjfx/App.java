@@ -1,26 +1,144 @@
 package org.openjfx;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
  * JavaFX App
  */
-public class App extends Application {
-Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
+public class App extends Application{
+    Petition petition = new Petition();
+    WorkFlow wf = new WorkFlow();
+    int id = wf.getApproverNext();
+    
+static Scene main;
+Scene DataEntry;
+Scene Reviewer;
+Scene Approver;
+Scene emailScene;
+Scene Edit;
+Scene DisplayEdit;
+Scene noWork;
+Scene rej;
+boolean avaliable = true;
     @Override
     public void start(Stage stageMainStage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+        boolean stop = false;
+        //
+        //
+        //Approver
+        class Approval{
+            public void approveScreen(){
+            
+            
+                /*if(ids == -1){
+                    Label noForms = new Label("There are no forms to work on at the momment");
+                    VBox layout5 = new VBox(20);
+                    layout5.getChildren().addAll(noForms);
+                    Approver= new Scene(layout5, 640,480);
+                }
+                else{*/
+                    Approver ap = new Approver(id);
+            
+                    Label label3= new Label("Welcome to Approver");
+                    Label formLabel= new Label("Petition");
+                    Label nameLabel= new Label("Name: "+(ap.getName()));
+                    Label DOBLabel= new Label("Date Of Birth: "+( ap.getDOB()));
+                    Label emailLabel= new Label("Email Address: " +( ap.getEmail()));
+                    Label cooLabel= new Label("Country of Orgin : "+( ap.getCountry()));
+                    Label AnumLabel= new Label("ANumber: " +( ap.getAnum()));
 
+                Button approvebutton = new Button("Approve");
+                Button rejectbutton = new Button("Reject");
+
+                approvebutton.setOnAction(e ->{
+                    avaliable = false;
+
+                    wf.StoreFinishedTasks(id, "Aprover");
+                    stageMainStage.setScene(emailScene);
+                });
+                
+                rejectbutton.setOnAction(e ->{
+                    avaliable = false;
+
+                    wf.sendBack(id);
+                    id = wf.getApproverNext();
+                    stageMainStage.setScene(rej);
+
+                    //stageMainStage.setScene(main);
+                    //start(stageMainStage);
+                }
+                );
+            
+                Button selectionButton = new Button("Go back to selection");
+                selectionButton.setOnAction(e ->stageMainStage.setScene(main));
+                //next button
+                Button next = new Button("Next");
+                next.setOnAction(e->{
+                    /*
+                    Approver ap2 = new Approver(wf.getApproverNext());
+                    nameLabel.setText("Name: "+(ap2.getName()));
+                    DOBLabel.setText("Date Of Birth: "+( ap2.getDOB()));
+                    emailLabel.setText("Email Address: " +( ap2.getEmail()));
+                    cooLabel.setText("Country of Orgin : "+( ap2.getCountry()));
+                    AnumLabel.setText("ANumber: " +( ap2.getAnum()));
+                    */
+                    avaliable = true;
+                    id = wf.getApproverNext();
+                    if(id == -1){
+                        stageMainStage.setScene(noWork);
+                    }
+                    else{
+                    approveScreen();
+                    stageMainStage.setScene(Approver);
+                    }
+                });
+                
+        
+                VBox layout3 = new VBox(20);
+                FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
+                FlowPane decison2 = new FlowPane(30,30,selectionButton,next);
+                
+        
+                layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, decison2);
+                layout3.setBackground((new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY))));
+
+                Approver= new Scene(layout3, 640,480);
+        
+                //Email
+                Label message = new Label("New Message");
+                Label to = new Label("To: "+ (ap.getEmail()));
+                Label subj = new Label("Subject: Petition for Alien Fiancé(e) and Children");
+                Label text = new Label("Hello " + (ap.getName()) + ", \n I'm pleased to inform you that your form has been approved! \n Sincerly, Immigrant Services");
+                Button send = new Button("Send");
+                send.setOnAction(e ->stageMainStage.setScene(Approver));
+                VBox layout4 = new VBox(20);
+                layout4.getChildren().addAll(message,to,subj,text,send);
+                layout4.setBackground((new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
+                emailScene= new Scene(layout4, 640,480);
+            }
+        }
+        //
+        //
+        //
+        
+        
+       // while(stop != true){
         //main scene
         var label = new Label("Hello, please select which screen you'd like to interact with.");
         Button dButton = new Button("DataEntry");
@@ -28,14 +146,28 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
         Button rButton = new Button("Reviewer");
         rButton.setOnAction(e -> stageMainStage.setScene(Reviewer));
         Button aButton = new Button("Approver");
-        aButton.setOnAction(e -> stageMainStage.setScene(Approver));
+        aButton.setOnAction(e -> {
+            if(id != -1){
+                new Approval().approveScreen();
+                //approveScreen(id);
+                stageMainStage.setScene(Approver);
+            }
+            else{
+                stageMainStage.setScene(noWork);
+            }
+        });
+        Button exit = new Button("Exit");
+        exit.setOnAction(e->{
+           // stop = true;
+           Platform.exit();
+           System.exit(0);
+        });
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label,dButton,rButton,aButton);
+        layout.getChildren().addAll(label,dButton,rButton,aButton, exit);
         var main = new Scene(layout, 640, 480);
 
         //Data Entry
-        Petition petition = new Petition();
-        WorkFlow wf = new WorkFlow();
+        
     //do{
         Label label1 = new Label("Welcome to Data Entry");
         Label wrong = new Label("Incorrect Input Values");
@@ -94,6 +226,9 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
             } else {
                 petition.writeToDB();
                 wf.StoreFinishedTasks(petition.getiD(), "Review");
+                if(id == -1){
+                    id = wf.getApproverNext();
+                }
                 stageMainStage.setScene(main);
                 wrong.setVisible(false);
                 aNumData.clear();
@@ -113,6 +248,11 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
         DataEntry = new Scene(layout1, 300, 800);
     //}while((petition.validateEntry() == false) && (petition.searchDB(petition) == true));
     //petition.writeToDB();
+
+
+
+
+    //Reviewer
     Petition.main(null);
     Review r = new Review();
         //Reviewer
@@ -178,58 +318,39 @@ Scene main, DataEntry, Reviewer, Approver, emailScene, Edit,DisplayEdit;
         Edit= new Scene(editLayout, 640,480);
         
 
-        //Approver
-        Petition.main(null);
-        Approver ap = new Approver(wf.getApproverNext());
-        Label label3= new Label("Welcome to Approver");
-        Label formLabel= new Label("Petition");
-        Label nameLabel= new Label("Name: "+(ap.getName()));
-        Label DOBLabel= new Label("Date Of Birth: "+( ap.getDOB()));
-        Label emailLabel= new Label("Email Address: " +( ap.getEmail()));
-        Label cooLabel= new Label("Country of Orgin : "+( ap.getCountry()));
-        Label AnumLabel= new Label("ANumber: " +( ap.getAnum()));
-        Button approvebutton = new Button("Approve");
-        approvebutton.setOnAction(e -> stageMainStage.setScene(emailScene));
-        Button rejectbutton = new Button("Reject");
-        rejectbutton.setOnAction(e -> stageMainStage.setScene(main));
-        Button selectionButton = new Button("Go back to selection");
-        selectionButton.setOnAction(e -> stageMainStage.setScene(main));
-
-        //next button
-        Button next = new Button("Next");
-        next.setOnAction(e->{
-	        Approver ap2 = new Approver(wf.getApproverNext());
-            nameLabel.setText("Name: "+(ap2.getName()));
-            DOBLabel.setText("Date Of Birth: "+( ap2.getDOB()));
-            emailLabel.setText("Email Address: " +( ap2.getEmail()));
-            cooLabel.setText("Country of Orgin : "+( ap2.getCountry()));
-            AnumLabel.setText("ANumber: " +( ap.getAnum()));
-        });
-
-
-        VBox layout3 = new VBox(20);
-        FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
-        FlowPane decison2 = new FlowPane(30,30,selectionButton,next);
         
-
-        layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, decison2);
-        Approver= new Scene(layout3, 640,480);
         
-        //Email
-        Label message = new Label("New Message");
-        Label to = new Label("To: "+ (ap.getEmail()));
-        Label subj = new Label("Subject: Petition for Alien Fiancé(e) and Children");
-        Label text = new Label("Hello " + (ap.getName()) + ", \n I'm pleased to inform you that your form has been approved! \n Sincerly, Immigrant Services");
-        Button send = new Button("Send");
-        send.setOnAction(e -> stageMainStage.setScene(main));
+        
+        //noWork
+        Label message = new Label("Sorry, there is no work at the momment.\nPlease check back later.");
+        message.setFont(new Font("Arial", 20));
+        Button back = new Button("Return to Selection");
+        back.setOnAction(e ->stageMainStage.setScene(main));
         VBox layout4 = new VBox(20);
-        layout4.getChildren().addAll(message,to,subj,text,send);
-        emailScene= new Scene(layout4, 640,480);
-
+        layout4.getChildren().addAll(message, back);
+        layout4.setBackground((new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY))));
+        noWork= new Scene(layout4, 640,480);
+        //reject 
+        Label notice = new Label("The form has been rejected.");
+        notice.setFont(new Font("Arial", 20));
+        Button returnA = new Button("Return to Approval");
+        
+        returnA.setOnAction(e ->stageMainStage.setScene(Approver));
+        VBox layoutrej = new VBox(20);
+        layoutrej.getChildren().addAll(notice, returnA);
+        layoutrej.setBackground((new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
+        rej= new Scene(layoutrej, 640,480);
+        //}
         stageMainStage.setScene(main);
         stageMainStage.show();
+
+    
     }
 
+
+    /*public Scene returnScene(Scene toBeReturned){
+        return toBeReturned;
+    }*/
     public static void main(String[] args) {
         launch();
         //Approval newA = new Approval();

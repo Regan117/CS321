@@ -33,7 +33,7 @@ class Petition extends DataBase{
         }
         */
         //TESTS for the petetion functions
-        /* 
+        /*
         Petition two = new Petition("ja3mes", "2000-08-03", "regan@gmail.com","USA",2);
         System.out.println("test 1 should name fail" +two.validateEntry());
 
@@ -133,13 +133,29 @@ class Petition extends DataBase{
 
         return false;
     }
+    /* 
+    @Override
     public Petition pullFromDB(int num){
+       /*  Petition newP =  
+        setName(newP.getName());
+        setAnum(newP.getAnum());
+        setCountry(newP.getCountry());
+        setDOB(newP.getDOB());
+        setEmail(newP.getEmail());
+        setiD(newP.getiD());
+        
 
-        return DataBase.dataBaseMap.get(num);
+        return DataBase.pullFromDB(num);
+    } */
+    public Petition pullDB(int id){
+        return DataBase.pullFromDB(id);
     }
+
+
     public Boolean writeToDB(){
         Petition p = new Petition(this.getName(),this.getDOB(),this.getEmail(),this.getCountry(),this.getAnum(), this.getiD());
-        DataBase.writeToDB(p, Anum);
+        DataBase.writeToDB(p, p.getiD());
+        DataBase.printDB();
         return true;
     }
     void displayPetition(){

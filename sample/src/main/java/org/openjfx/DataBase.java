@@ -1,6 +1,7 @@
 package org.openjfx;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class DataBase {
     public static HashMap<Integer, Petition> dataBaseMap = new HashMap<>();
@@ -18,13 +19,21 @@ public class DataBase {
         return false;
     }
     */
-    public Petition pullFromDB(int num){
-        return dataBaseMap.get(num);
-    }
+    public static Petition pullFromDB(int num){
+
+            return dataBaseMap.get(num);
+        }
+    
     public static Boolean writeToDB(Petition p, int iD){
         dataBaseMap.put(iD, p);
         return true;
     }
-    
 
+
+    public static void printDB(){
+        for( Map.Entry<Integer,Petition> entry : dataBaseMap.entrySet() ){
+            System.out.println("FROM DB"+ entry.getKey() + " => " + entry.getValue() );
+        }
+        
+    }
 }

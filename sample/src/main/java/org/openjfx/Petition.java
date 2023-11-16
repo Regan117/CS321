@@ -10,13 +10,13 @@ class Petition extends DataBase{
     
     public static void main(String[] args){
         //mock data to be added into the "dataBaseMap" should function on it's own when WF is working
-        Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1,1);
+        //Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1,1);
         //System.out.println("test 1 should pass" +one.validateEntry());
-        one.writeToDB(one,1);
+        //one.writeToDB(one,1);
 
         
-        Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2,2);
-        two.writeToDB(two,2);
+        //Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2,2);
+        //two.writeToDB(two,2);
 
         /*
         Petition three = new Petition("james", "2000-08-03", "regan@gmail.com","USA",3);

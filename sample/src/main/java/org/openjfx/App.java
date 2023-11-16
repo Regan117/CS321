@@ -45,14 +45,6 @@ boolean avaliable = true;
         class Approval{
             public void approveScreen(){
             
-            
-                /*if(ids == -1){
-                    Label noForms = new Label("There are no forms to work on at the momment");
-                    VBox layout5 = new VBox(20);
-                    layout5.getChildren().addAll(noForms);
-                    Approver= new Scene(layout5, 640,480);
-                }
-                else{*/
                     Approver ap = new Approver(id);
             
                     Label label3= new Label("Welcome to Approver");
@@ -66,27 +58,27 @@ boolean avaliable = true;
                 Button approvebutton = new Button("Approve");
                 Button rejectbutton = new Button("Reject");
 
+            
                 approvebutton.setOnAction(e ->{
                     avaliable = false;
-
+                    approveScreen();
                     wf.StoreFinishedTasks(id, "Aprover");
                     stageMainStage.setScene(emailScene);
                 });
                 
                 rejectbutton.setOnAction(e ->{
                     avaliable = false;
-
+                    approveScreen();
                     wf.sendBack(id);
-                    id = wf.getApproverNext();
                     stageMainStage.setScene(rej);
 
                     //stageMainStage.setScene(main);
                     //start(stageMainStage);
                 }
                 );
-            
+        
                 Button selectionButton = new Button("Go back to selection");
-                selectionButton.setOnAction(e ->stageMainStage.setScene(main));
+                selectionButton.setOnAction(e ->start(stageMainStage));
                 //next button
                 Button next = new Button("Next");
                 next.setOnAction(e->{
@@ -98,12 +90,13 @@ boolean avaliable = true;
                     cooLabel.setText("Country of Orgin : "+( ap2.getCountry()));
                     AnumLabel.setText("ANumber: " +( ap2.getAnum()));
                     */
-                    avaliable = true;
                     id = wf.getApproverNext();
                     if(id == -1){
+                        avaliable = true;
                         stageMainStage.setScene(noWork);
                     }
                     else{
+                        avaliable = true;
                     approveScreen();
                     stageMainStage.setScene(Approver);
                     }
@@ -114,8 +107,14 @@ boolean avaliable = true;
                 FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
                 FlowPane decison2 = new FlowPane(30,30,selectionButton,next);
                 
-        
+                if(avaliable == false){
+                    decison.setDisable(true);
+                    layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel,decison , decison2);
+
+                }
+                else{
                 layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel, decison, decison2);
+                }
                 layout3.setBackground((new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY))));
 
                 Approver= new Scene(layout3, 640,480);

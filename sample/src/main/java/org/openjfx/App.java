@@ -46,7 +46,6 @@ boolean avaliable = true;
             public void approveScreen(){
             
                     Approver ap = new Approver(id);
-            
                     Label label3= new Label("Welcome to Approver");
                     Label formLabel= new Label("Petition");
                     Label nameLabel= new Label("Name: "+(ap.getName()));
@@ -105,10 +104,15 @@ boolean avaliable = true;
         
                 VBox layout3 = new VBox(20);
                 FlowPane decison = new FlowPane(30,30, approvebutton, rejectbutton);
+
+        
+                next.setDisable(true);
+            
                 FlowPane decison2 = new FlowPane(30,30,selectionButton,next);
                 
                 if(avaliable == false){
                     decison.setDisable(true);
+                    next.setDisable(false);
                     layout3.getChildren().addAll(label3,formLabel, nameLabel, DOBLabel, emailLabel, cooLabel,AnumLabel,decison , decison2);
 
                 }
@@ -128,7 +132,7 @@ boolean avaliable = true;
                 send.setOnAction(e ->stageMainStage.setScene(Approver));
                 VBox layout4 = new VBox(20);
                 layout4.getChildren().addAll(message,to,subj,text,send);
-                layout4.setBackground((new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
+                layout4.setBackground((new Background(new BackgroundFill(Color.LIGHTYELLOW, CornerRadii.EMPTY, Insets.EMPTY))));
                 emailScene= new Scene(layout4, 640,480);
             }
         }
@@ -337,7 +341,7 @@ boolean avaliable = true;
         returnA.setOnAction(e ->stageMainStage.setScene(Approver));
         VBox layoutrej = new VBox(20);
         layoutrej.getChildren().addAll(notice, returnA);
-        layoutrej.setBackground((new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
+        layoutrej.setBackground((new Background(new BackgroundFill(Color.LIGHTYELLOW, CornerRadii.EMPTY, Insets.EMPTY))));
         rej= new Scene(layoutrej, 640,480);
         //}
         stageMainStage.setScene(main);

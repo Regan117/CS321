@@ -8,51 +8,6 @@ class Petition extends DataBase{
     protected int Anum;
     protected int iD;
     
-    public static void main(String[] args){
-        //mock data to be added into the "dataBaseMap" should function on it's own when WF is working
-        //Petition one = new Petition("james", "2000-08-03", "regan@gmail.com","USA",1,1);
-        //System.out.println("test 1 should pass" +one.validateEntry());
-        //one.writeToDB(one,1);
-
-        
-        //Petition two = new Petition("james mo", "2000-08-03", "regan@gmail.com","USA",2,2);
-        //two.writeToDB(two,2);
-
-        /*
-        Petition three = new Petition("james", "2000-08-03", "regan@gmail.com","USA",3);
-        one.writeToDB(three);
-        
-        Petition test = new Petition();
-        test = (one.pullFromDB(1));
-        if(test != null){
-        System.out.println(test.getAnum());
-        }
-        else{
-            System.out.println("why");
-
-        }
-        */
-        //TESTS for the petetion functions
-        /*
-        Petition two = new Petition("ja3mes", "2000-08-03", "regan@gmail.com","USA",2);
-        System.out.println("test 1 should name fail" +two.validateEntry());
-
-        Petition three = new Petition("james", "20000-08-03", "regan@gmail.com","USA",2);
-        System.out.println("test 1 fail date" +three.validateEntry());
-
-        Petition four = new Petition("james", "2000-08-03", "regan","USA",02);
-        System.out.println("test 1 should fail email" +four.validateEntry());
-
-
-       
-        System.out.println("write test" +  one.writeToDB(one));
-
-        System.out.println("pull test" +  one.pullFromDB(02));
-
-        System.out.println("pull test" +  one.searchDB(one));
-*/
-
-    }
     public Petition(){
 
     }

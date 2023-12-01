@@ -1,107 +1,10 @@
 package org.openjfx;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.Test;
-/* 
+import org.junit.Test;
 
-
-	@Test
-	public void testPetition() throws Exception {
-
-	}
-
-	@Test
-	public void testPetition() throws Exception {
-
-	}
-
-	@Test
-	public void testGetName() throws Exception {
-
-	}
-
-	@Test
-	public void testSetName() throws Exception {
-
-	}
-
-	@Test
-	public void testGetEmail() throws Exception {
-
-	}
-
-	@Test
-	public void testSetEmail() throws Exception {
-
-	}
-
-	@Test
-	public void testGetDOB() throws Exception {
-
-	}
-
-	@Test
-	public void testSetDOB() throws Exception {
-
-	}
-
-	@Test
-	public void testGetCountry() throws Exception {
-
-	}
-
-	@Test
-	public void testSetCountry() throws Exception {
-
-	}
-
-	@Test
-	public void testGetAnum() throws Exception {
-
-	}
-
-	@Test
-	public void testSetAnum() throws Exception {
-
-	}
-
-	@Test
-	public void testGetiD() throws Exception {
-
-	}
-
-	@Test
-	public void testSetiD() throws Exception {
-
-	}
-
-	@Test
-	public void testValidateEntry() throws Exception {
-
-	}
-
-	@Test
-	public void testSearchDB() throws Exception {
-
-	}
-
-	@Test
-	public void testPullFromDB() throws Exception {
-
-	}
-
-	@Test
-	public void testPullDB() throws Exception {
-
-	}
-
-	@Test
-	public void testWriteToDB() throws Exception {
-
-	}
-*/
-class PetitionTest{
+public class PetitionTest{
 	public String name = "John";
 	public String DOB = "1999-03-14";
 	public String Email = "john@gmail.com";
@@ -109,27 +12,24 @@ class PetitionTest{
 	public int ANum = 123456789;
 	public Petition mockDB[] = new Petition[5];
 
-	public final Petition p = new Petition( name,DOB, Email, Country, ANum,1);
-	public final Petition p1 = new Petition( "james bo cane",DOB, Email, Country, 999999999,1);
+	public final Petition p = new Petition( name,DOB, Email, Country, ANum);
+	public final Petition p1 = new Petition( "james bo cane",DOB, Email, Country, 999999999);
 
-	//Regan wrote these test cases
-	//this method tests the validity of the validate entry method. I test a different combination of inputs and test each input required to make a petition.
-	//The wrong inputs should return false and valid ones shoud return true.
 	@Test
- 	void testValidateEntry()throws Exception {
+	public void testValidateEntry()throws Exception {
 		//Petition p = new Petition( name,DOB, Email, Country, ANum);
 		/*assertTrue(name instanceof String);
 		assertTrue(p.ValidateEntry(name,DOB,Email,Country,ANum)); */
-		Petition p2 = new Petition(name,DOB,Email,Country,ANum,1);
-		Petition p3 = new Petition(name,"934372849",Email,Country,ANum,1);
-			Petition p4 = new Petition("123",DOB,Email,Country,ANum,1);
-				Petition p5 = new Petition(name,DOB,"john",Country,ANum,1);
-					Petition p6 = new Petition(name,"934372849",Email,"UnitedStates",ANum,1);
-						Petition p7 = new Petition(name,DOB,Email,Country,-2,1);
-							Petition p8 = new Petition(null,DOB,Email,Country,ANum,1);
-								Petition p9 = new Petition(name,"-2",Email,Country,ANum,1);
-									Petition p10 = new Petition(name,DOB,null,Country,ANum,1);
-										Petition p11 = new Petition(name,DOB,Email,null,ANum,1);
+		Petition p2 = new Petition(name,DOB,Email,Country,ANum);
+		Petition p3 = new Petition(name,"934372849",Email,Country,ANum);
+			Petition p4 = new Petition("123",DOB,Email,Country,ANum);
+				Petition p5 = new Petition(name,DOB,"john",Country,ANum);
+					Petition p6 = new Petition(name,"934372849",Email,"UnitedStates",ANum);
+						Petition p7 = new Petition(name,DOB,Email,Country,-2);
+							Petition p8 = new Petition(null,DOB,Email,Country,ANum);
+								Petition p9 = new Petition(name,"-2",Email,Country,ANum);
+									Petition p10 = new Petition(name,DOB,null,Country,ANum);
+										Petition p11 = new Petition(name,DOB,Email,null,ANum);
 
 		assertEquals(true, p2.validateEntry());
 		assertEquals(false, p3.validateEntry());
@@ -156,7 +56,7 @@ class PetitionTest{
 
 	//broke unit testing 10/30 changed the method while working on sprint 1
 	@Test
-	public void testpullDB() throws Exception {
+	public void testPullFromDB() throws Exception {
 		mockDB[0] = p;
 		//true if petiton is pulled, false otherwise or invalid ANum
 		//assertTrue(p.pullFromDB(ANum));

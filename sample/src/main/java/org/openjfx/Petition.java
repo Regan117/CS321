@@ -54,7 +54,7 @@ class Petition extends DataBase{
 
     }
     public Petition(){
-
+        
     }
     public Petition(String name, String dOB, String email, String country, int anum, int id) {
         Name = name;
@@ -102,17 +102,72 @@ class Petition extends DataBase{
     }
     
 //NOT FINISHED
+    public boolean checkEachChar(int x, int y){
+        for(int i=0; i<DOB.length();i++){
+            if(i>=x && i<=y){
+                if(!Character.isDigit(DOB.charAt(i))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean validateDoB(){
+        if(DOB.length()<10||DOB.length()>10){
+            return false;
+        }
+        if(!checkEachChar(0, 1)){
+            return false;
+        }
+        if(!checkEachChar(3, 4)){
+            return false;
+        }
+        String year= "";
+        for(int i = 0; i<DOB.length(); i++){
+            if(i>5){
+                year = year + DOB.charAt(i);
+            }
+        }
+        int numbYear = Integer.parseInt(year);
+        if(numbYear<1920 || numbYear>2023){
+            return false;
+        }if(DOB.charAt(0) == '0'){
+            if(!Character.isDigit(DOB.charAt(1))){
+                return false;
+            }
+        }else{
+            if(DOB.charAt(0)=='1'){
+                String secondVal = "";
+                secondVal = secondVal+DOB.charAt(1);
+                if(Integer.parseInt(secondVal)>2){
+                return false;
+                }
+            }
+        }
+        return true;
+    }
     public Boolean validateEntry() {
         if(Name == null || DOB == null || Country == null|| Email == null || Anum < 0 || Anum >  1000000000){
             return false;
         }
         boolean dV = true;
-
+        
         if((Name instanceof String)){
             boolean allLetters = Name.chars().allMatch(Character::isLetter);
+            for(int i = 0; i<Name.length();i++){
+                if(Name.charAt(i)==' '){
+                    if(allLetters==false){
+                        allLetters = true;
+                    }
+                }
+            }
+            
             if(!allLetters){
                 return false;
             }
+        }
+        if(validateDoB()==false){
+            return false;
         }
         //if(!GenericValidator.isDate(DOB, "MM-DD-YYYY", dV)){
         //    return false;
@@ -157,6 +212,10 @@ class Petition extends DataBase{
         DataBase.writeToDB(p, p.getiD());
         DataBase.printDB();
         return true;
+    }
+
+    public void deleteFromDB(){
+        DataBase.deleteFromDB(iD);
     }
     void displayPetition(){
         System.out.println(this.Name);

@@ -20,7 +20,7 @@ public WorkFlow(){
 }
 public int getUniqueID(){
     uniqueID ++;
-    System.out.println("counter =" + (uniqueID-1));
+    System.out.println("Unique =" + (uniqueID-1));
     return uniqueID -1;
 }
 
@@ -66,5 +66,13 @@ public int getApproverNext(){
         return -1;
     }
 }
+public int getReviwerNext(){
+    if(!reviewList.isEmpty()){
+        return reviewList.remove(0);
+    }
+    else{
 
+        return -1;
+    }
+}
 }

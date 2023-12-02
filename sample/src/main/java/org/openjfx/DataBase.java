@@ -29,6 +29,9 @@ public class DataBase {
         return true;
     }
 
+    public static void deleteFromDB(int id){
+        dataBaseMap.remove(id);
+    }
 
     public static void printDB(){
         for( Map.Entry<Integer,Petition> entry : dataBaseMap.entrySet() ){

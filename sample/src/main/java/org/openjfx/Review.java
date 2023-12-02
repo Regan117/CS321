@@ -1,26 +1,30 @@
 package org.openjfx;
 
-class Review extends App {
+class Review extends Petition {
     protected String Name ;
     protected String Email;
     protected String DOB;
     protected String Country;
     protected int Anum;
+    Petition toReview;
     //private Petition p = new Petition("james bo cane","1999-08-08", "jame@gmail.com", "Brazil", 999999999);
-    private int mocktasknum = 1;
+    private int mocktasknum ;
 
     public Review(){
 
     }
 
-    public Review(int mocktasknum){
+    public void getPetition(int mocktask){
         Petition p = new Petition();
-        p = p.pullFromDB(mocktasknum);
-        Name = p.getName();
-        DOB = p.getDOB();
-        Email = p.getEmail();
-        Country = p.getCountry();
-        Anum = p.getAnum();
+        toReview = p;
+        p = DataBase.pullFromDB(mocktask);
+        p = p.pullDB(mocktask);
+        this.Anum = p.Anum;
+        this.Country = p.Country;
+        this.DOB = p.DOB;
+        this.Email = p.Email;
+        this.Name = p.Name;
+        
     }
 
     public String getName(){
@@ -39,6 +43,9 @@ class Review extends App {
     
     public int getAnum() {
         return Anum;
+    }
+    Petition getPetition(){
+        return toReview;
     }
 
 }
